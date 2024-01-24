@@ -24,14 +24,17 @@ export const Heading = () => {
       </h3>
       {isLoading && (
         <div className="w-full flex items-center justify-center">
+
           <Spinner size="lg" />
         </div>
       )}
       {isAuthenticated && !isLoading && (
         <Button asChild>
+
           <Link href="/documents">
             Enter Jotion
             <ArrowRight className="h-4 w-4 ml-2" />
+            
           </Link>
         </Button>
       )}

@@ -31,17 +31,21 @@ export const Navigation = () => {
                 )}>
                     <ChevronsLeft className="h-6 w-6" />
                 </div>
+
                 <div>
                     <p>
                         Action items
                     </p>
                 </div>
+
                 <div className="mt-4">
                     <p>Documents</p>
                 </div>
+
                 <div className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0">
 
                 </div>
+                
             </aside>
             <div ref={navbarRef} className={cn(
                 "absolute top-0 z-[99999] left-60 w-[calc(100%-240px)]",

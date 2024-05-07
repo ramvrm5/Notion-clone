@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import { useUser } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";

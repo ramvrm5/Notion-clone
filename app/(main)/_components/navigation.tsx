@@ -10,7 +10,6 @@ import { UserItem } from "./user-item";
 export const Navigation = () => {
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 768px)");
-
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
     const navbarRef = useRef<ElementRef<"div">>(null);
@@ -34,7 +33,6 @@ export const Navigation = () => {
     const handleMouseDown = (event:React.MouseEvent<HTMLDivElement,MouseEvent>) => {
         event.preventDefault();
         event.stopPropagation();
-
         isResizingRef.current = true;
         document.addEventListener("mousemove",handleMouseMove);
         document.addEventListener("mouseup",handleMouseUp);
@@ -80,7 +78,6 @@ export const Navigation = () => {
         if(sidebarRef.current && navbarRef.current) {
             setIsCollapsed(true);
             setIsResetting(true);
-
             sidebarRef.current.style.width = "0";
             navbarRef.current.style.setProperty("width", "100%");
             navbarRef.current.style.setProperty("left", "0");

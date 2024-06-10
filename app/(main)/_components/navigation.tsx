@@ -16,8 +16,6 @@ export const Navigation = () => {
     const [isResetting, setIsResetting] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(false);
 
-
-
     return (
         <>
             <aside ref={sidebarRef} className={cn(

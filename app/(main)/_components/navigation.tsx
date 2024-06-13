@@ -10,6 +10,7 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { toast } from "sonner";
+import { DocumentList } from "./document-list";
 
 export const Navigation = () => {
     const pathname = usePathname();
@@ -132,7 +133,7 @@ export const Navigation = () => {
                     <Item onClick={handleCreate} label="New Page" icon={PlusCircle} />
                 </div>
                 <div className="mt-4">
-
+                    <DocumentList />
                 </div>
                 <div onMouseDown={handleMouseDown} onClick={resetWidth} className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0">
 

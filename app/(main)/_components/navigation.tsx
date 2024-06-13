@@ -1,12 +1,12 @@
 "use client"
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, PlusCircle } from "lucide-react";
+import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { toast } from "sonner";
@@ -14,7 +14,6 @@ import { toast } from "sonner";
 export const Navigation = () => {
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 768px)");
-    const documents = useQuery(api.documents.get);
     const create = useMutation(api.documents.create);
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -23,49 +22,49 @@ export const Navigation = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     useEffect(() => {
-      if(isMobile){
-        collapse();
-      }else{
-        resetWidth();
-      }
+        if (isMobile) {
+            collapse();
+        } else {
+            resetWidth();
+        }
     }, [isMobile])
 
     useEffect(() => {
-      if(isMobile){
-        collapse();
-      }
-    }, [pathname,isMobile])
-    
-    const handleMouseDown = (event:React.MouseEvent<HTMLDivElement,MouseEvent>) => {
+        if (isMobile) {
+            collapse();
+        }
+    }, [pathname, isMobile])
+
+    const handleMouseDown = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.preventDefault();
         event.stopPropagation();
         isResizingRef.current = true;
-        document.addEventListener("mousemove",handleMouseMove);
-        document.addEventListener("mouseup",handleMouseUp);
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
     };
 
-    const handleMouseMove = (event:MouseEvent) => {
-        if(!isResizingRef.current) return;
+    const handleMouseMove = (event: MouseEvent) => {
+        if (!isResizingRef.current) return;
         let newWidth = event.clientX;
 
-        if(newWidth < 240) newWidth = 240;
-        if(newWidth > 480) newWidth = 480;
+        if (newWidth < 240) newWidth = 240;
+        if (newWidth > 480) newWidth = 480;
 
-        if(sidebarRef.current && navbarRef.current){
+        if (sidebarRef.current && navbarRef.current) {
             sidebarRef.current.style.width = `${newWidth}px`;
             navbarRef.current.style.setProperty("left", `${newWidth}px`);
-            navbarRef.current.style.setProperty("width",`calc(100% - ${newWidth}px)`)
+            navbarRef.current.style.setProperty("width", `calc(100% - ${newWidth}px)`)
         }
     };
 
     const handleMouseUp = () => {
         isResizingRef.current = false;
-        document.removeEventListener("mousemove",handleMouseMove);
-        document.removeEventListener("mouseup",handleMouseUp);
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
     }
 
     const resetWidth = () => {
-        if(sidebarRef.current && navbarRef.current){
+        if (sidebarRef.current && navbarRef.current) {
             setIsCollapsed(false);
             setIsResetting(true);
 
@@ -81,7 +80,7 @@ export const Navigation = () => {
     }
 
     const collapse = () => {
-        if(sidebarRef.current && navbarRef.current) {
+        if (sidebarRef.current && navbarRef.current) {
             setIsCollapsed(true);
             setIsResetting(true);
             sidebarRef.current.style.width = "0";
@@ -95,7 +94,7 @@ export const Navigation = () => {
     const handleCreate = () => {
         const promise = create({ title: "Untitled" });
 
-        toast.promise(promise,{
+        toast.promise(promise, {
             loading: "Creating a new note...",
             success: "New note created!",
             error: "Failed to create a new note"
@@ -110,22 +109,30 @@ export const Navigation = () => {
                 isMobile && "w-0"
             )}>
                 <div
-                 onClick={collapse}
-                 className={cn(
-                    "h-6 w-6 text-muted-foreground rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 absolute top-3 right-2 opacity-0  group-hover/sidebar:opacity-100",
-                    isMobile && "opacity-100"
-                )}>
+                    onClick={collapse}
+                    className={cn(
+                        "h-6 w-6 text-muted-foreground rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 absolute top-3 right-2 opacity-0  group-hover/sidebar:opacity-100",
+                        isMobile && "opacity-100"
+                    )}>
                     <ChevronsLeft className="h-6 w-6" />
                 </div>
                 <div>
                     <UserItem />
+                    <Item
+                        label="Search"
+                        icon={Search}
+                        isSearch
+                        onClick={() => { }}
+                    />
+                    <Item
+                        label="Search"
+                        icon={Settings}
+                        onClick={() => { }}
+                    />
                     <Item onClick={handleCreate} label="New Page" icon={PlusCircle} />
                 </div>
                 <div className="mt-4">
-                   {documents?.map((document) => (
-                    <p
-                    key={document._id} >{document.title}</p>
-                   ))}
+
                 </div>
                 <div onMouseDown={handleMouseDown} onClick={resetWidth} className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0">
 

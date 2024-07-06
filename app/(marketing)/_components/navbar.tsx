@@ -1,6 +1,6 @@
 "use client";
 
-import { useScrollTop } from "@/app/hooks/use-scroll-top";
+import { useScrollTop } from "@/hooks/use-scroll-top";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Logo } from "./logo";
@@ -40,14 +40,14 @@ export const Navbar = () => {
         )}
         {isAuthenticated && !isLoading && (
           <>
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/documents">
-              Enter Jotion
-            </Link>
-          </Button>
-          <UserButton 
-            afterSignOutUrl="/"
-          />
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/documents">
+                Enter Jotion
+              </Link>
+            </Button>
+            <UserButton
+              afterSignOutUrl="/"
+            />
           </>
         )}
         <ModeToggle />

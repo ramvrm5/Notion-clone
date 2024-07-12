@@ -11,22 +11,23 @@ import { useMutation, useQuery } from "convex/react";
 
 interface DocumentIdPageProps {
     params: {
-        documentId: Id<"documents">
+        documnetId: Id<"documents">
     };
 };
 
 const DocumentIdPage = ({
     params
 }: DocumentIdPageProps) => {
+    console.log(params)
     const Editor = useMemo(() => dynamic(() => import("@/components/editor"), { ssr: false }), []);
     const document = useQuery(api.documents.getById, {
-        documentId: params.documentId
+        documentId: params.documnetId
     })
     const update = useMutation(api.documents.update);
 
     const onChange = (content: string) => {
         update({
-            id: params.documentId,
+            id: params.documnetId,
             content
         })
     }
@@ -53,10 +54,12 @@ const DocumentIdPage = ({
 
     return (
         <div className="pb-40">
-            <Cover url={document.coverImage} />
+            <Cover preview url={document.coverImage} />
             <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
-                <Toolbar initialData={document} />
-                <Editor onChange={onChange}
+                <Toolbar preview initialData={document} />
+                <Editor
+                    editable={false}
+                    onChange={onChange}
                     initialContent={document.content}
                 />
             </div>

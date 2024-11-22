@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
 import { Heading } from "./_components/heading";
 import { Heroes } from "./_components/heroes";
 import { Footer } from "./_components/footer";
 
+import { Button } from "@/components/ui/button";
 const MarketingPage = () => {
   return (
     <div className="min-h-full flex flex-col dark:bg-[#1F1F1F]">
